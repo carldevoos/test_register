@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  build:
     name: Build Image and Deploy
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +36,8 @@ jobs:
           DOCKER_IMAGE: '${{ secrets.DOCKER_USER }}/${{ env.NAME }}:${{ env.TAG }}'
         run: docker push $DOCKER_IMAGE
 
-  task-build:
+  deploy-task:
+    needs: [build]
     name: Build ECS Task
     runs-on: ubuntu-latest
     steps:

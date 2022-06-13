@@ -71,3 +71,14 @@ jobs:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: test-push-actions
           image: $DOCKER_IMAGE
+
+      - name: Deploy Amazon ECS task definition
+        env: 
+          DOCKER_IMAGE: '${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPO_NAME }}'
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          service: test-service-github
+          cluster: DemoECSCluster3
+          container-name: test-push-actions
+          image: $DOCKER_IMAGE
